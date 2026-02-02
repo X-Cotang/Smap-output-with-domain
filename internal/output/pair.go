@@ -17,8 +17,13 @@ func StartPair() {
 
 func ContinuePair(result g.Output) {
 	thisString := ""
+	// Use the user-provided hostname (domain) if available, otherwise use IP
+	host := result.IP
+	if result.UHostname != "" {
+		host = result.UHostname
+	}
 	for _, port := range result.Ports {
-		thisString += fmt.Sprintf("%s:%d\n", result.IP, port.Port)
+		thisString += fmt.Sprintf("%s:%d\n", host, port.Port)
 	}
 	Write(thisString, g.PairFilename, openedPairFile)
 }
